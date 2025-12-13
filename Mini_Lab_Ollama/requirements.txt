@@ -1,0 +1,9 @@
+langchain
+langchain-core
+langchain-community
+langchain-experimental
+langchain-neo4j
+langchain-ollama
+wikipedia
+tiktoken
+neo4j
