@@ -1,0 +1,5 @@
+neo4j/data/
+neo4j/import/
+__pycache__/
+*.pyc
+.DS_Store

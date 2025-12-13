@@ -1,0 +1,17 @@
+1. What recommendation method did you use?
+
+    I used real-time Graph Pattern Matching to implement a Collaborative Filtering strategy. This method makes use of the graph's inherent connectivity, in contrast to conventional table-based techniques that necessitate pre-calculating large similarity matrices.
+
+    "Peer Users" are identified by the algorithm by following this path: (The intended user) -[:PLACED]->(:Order) -[:CONTAINS]-> (Product)<-[:CONTAINS] -(:Order)<-[:PLACED] (Peer User)
+
+    Next, it finds products that those peers bought but the target user hasn't: (User of Peers) -[:PLACED] ->(:Order)-[:CONTAINS]-> (Suggestion)
+
+    In order to ensure that the most popular items in the user's "neighbourhood" appear first, the results are ranked using a relevance score that is derived from the frequency of these paths (i.e., how many similar users bought the item).
+
+2. 
+
+    Automated ETL Pipeline: An orchestration tool like Apache Airflow or a Change Data Capture (CDC) system like Debezium should take the place of the existing manual Python script.  This would guarantee that, without the need for human intervention, new orders in Postgres are immediately reflected in Neo4j.
+
+    Scalable Algorithms (GDS): While real-time traversal is effective for small datasets, it becomes sluggish for millions of users. I would create Node Embeddings (FastRP) or pre-calculate similarity scores (using Jaccard or Cosine Similarity) using the Neo4j Graph Data Science (GDS) library. Instead of costly traversals, these pre-calculated values would enable quick O(1) lookups.
+
+    API Hardening: There is insufficient security in the current FastAPI implementation. To lessen database load, production code needs rate limiting, caching (Redis), and authentication (OAuth2/JWT) for common queries.
